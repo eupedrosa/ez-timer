@@ -7,11 +7,13 @@ export default function Home() {
         <form action="/timer/new" method="POST" class="flex items-center gap-4">
           <div class="flex items-center gap-2">
             <input
-              type="number"
+              type="text"
               name="minutes"
               placeholder="15"
               autoFocus
-              class="px-2 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 text-xl w-24 text-center focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              pattern="[0-9]*"
+              inputMode="numeric"
+              class="px-2 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 text-xl w-24 text-center focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500"
             />
             <span class="text-gray-300">minutes</span>
           </div>
