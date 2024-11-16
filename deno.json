@@ -26,9 +26,9 @@
     "preact/": "https://esm.sh/preact@10.22.0/",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
-    "tailwindcss": "npm:tailwindcss@3.4.1",
-    "tailwindcss/": "npm:/tailwindcss@3.4.1/",
-    "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
+    "tailwindcss": "npm:tailwindcss@3.4.15",
+    "tailwindcss/": "npm:/tailwindcss@3.4.15/",
+    "tailwindcss/plugin": "npm:/tailwindcss@3.4.15/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
     "pocketbase": "https://esm.sh/pocketbase@0.21.5",
     "cron": "jsr:@hexagon/croner@8.1.2"
