@@ -9,6 +9,7 @@ interface CounterProps {
 export default function Counter(props: CounterProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [initialValue] = useState(props.count.value);
 
   const formatTime = (totalSeconds: number) => {
     const isNegative = totalSeconds < 0;
@@ -64,7 +65,7 @@ export default function Counter(props: CounterProps) {
 
   const resetTimer = () => {
     pauseTimer();
-    props.count.value = 15 * 60;
+    props.count.value = initialValue;
     saveTimer();
   };
 
@@ -72,7 +73,7 @@ export default function Counter(props: CounterProps) {
     <div class="min-h-screen bg-gray-900 flex flex-col items-center justify-center">
       <div id="timer" class="flex flex-col items-center gap-8 py-6">
         <p 
-          class={`text-big tabular-nums ${
+          class={`text-7xl md:text-12xl lg:text-[20rem] tabular-nums ${
             props.count.value <= 0 ? 'text-red-500' : 'text-green-500'
           }`}
         >
