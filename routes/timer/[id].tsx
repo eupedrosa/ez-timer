@@ -31,11 +31,11 @@ export const handler: Handlers = {
     
     try {
       await pb.collection('timers').update(id, {
-        seconds: data.seconds,
+        running: data.running,
       });
-      return new Response('Timer updated', { status: 200 });
+      return new Response('Timer state updated', { status: 200 });
     } catch (error) {
-      return new Response('Failed to update timer', { status: 500 });
+      return new Response('Failed to update timer state', { status: 500 });
     }
   },
 };
@@ -46,7 +46,10 @@ export default function Timer(props: PageProps) {
       <a href="/" class="fixed top-4 right-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
         Home
       </a>
-      <Counter count={useSignal(props.data.seconds)} />
+      <Counter 
+        count={useSignal(props.data.seconds)} 
+        data={props.data}
+      />
     </div>
   );
 }

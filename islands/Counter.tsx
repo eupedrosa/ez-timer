@@ -4,12 +4,24 @@ import { useEffect, useState } from "preact/hooks";
 
 interface CounterProps {
   count: Signal<number>;
+  data: {
+    running: boolean;
+    updated: string;
+  };
 }
 
 export default function Counter(props: CounterProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [initialValue] = useState(props.count.value);
+
+  useEffect(() => {
+    if (props.data.running) {
+      const elapsedSeconds = Math.floor((Date.now() - new Date(props.data.updated).getTime()) / 1000);
+      props.count.value = Math.max(props.count.value - elapsedSeconds, 0);
+      startTimer();
+    }
+  }, []);
 
   const formatTime = (totalSeconds: number) => {
     const isNegative = totalSeconds < 0;
@@ -23,7 +35,7 @@ export default function Counter(props: CounterProps) {
     return isNegative ? `-${timeString}` : timeString;
   };
 
-  const saveTimer = async () => {
+  const saveTimerState = async (running: boolean) => {
     try {
       const response = await fetch(globalThis.location.href, {
         method: 'POST',
@@ -31,14 +43,14 @@ export default function Counter(props: CounterProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          seconds: props.count.value,
+          running: running,
         }),
       });
       if (!response.ok) {
-        console.error('Failed to save timer');
+        console.error('Failed to save timer state');
       }
     } catch (error) {
-      console.error('Error saving timer:', error);
+      console.error('Error saving timer state:', error);
     }
   };
 
@@ -46,12 +58,12 @@ export default function Counter(props: CounterProps) {
     if (isRunning) return;
     
     const interval = setInterval(() => {
-      props.count.value -= 1;
-      saveTimer();
+      props.count.value = Math.max(props.count.value - 1, 0);
     }, 1000);
     
     setIntervalId(interval);
     setIsRunning(true);
+    saveTimerState(true);
   };
 
   const pauseTimer = () => {
@@ -59,14 +71,14 @@ export default function Counter(props: CounterProps) {
       clearInterval(intervalId);
       setIntervalId(null);
       setIsRunning(false);
-      saveTimer();
+      saveTimerState(false);
     }
   };
 
   const resetTimer = () => {
     pauseTimer();
     props.count.value = initialValue;
-    saveTimer();
+    saveTimerState(false);
   };
 
   return (

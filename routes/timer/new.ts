@@ -41,6 +41,7 @@ export async function handler(req: Request) {
     try {
       const record = await pb.collection('timers').create({
         "seconds": minutes * 60,
+        "running": false,
       });
       
       return new Response(null, {
